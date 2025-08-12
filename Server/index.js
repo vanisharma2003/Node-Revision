@@ -5,6 +5,7 @@ if(req.url === "/favicon.ico") return
 const myUrl = url.parse(req.url,true)
 console.log(myUrl)
 console.log(myUrl.query)
+console.log(req.method)
    switch(myUrl.pathname){
    case "/":res.end("Welcome")
    break;
