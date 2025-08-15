@@ -1,9 +1,13 @@
 const express = require("express")
-const users = require("./MOCK_DATA.json")
+let users = require("./MOCK_DATA.json")
 const app = express()
+const fs = require("fs")
+const { json } = require("stream/consumers")
 app.listen(8000,()=>{
     console.log("Server Started")
 })
+//middleware 
+app.use(express.urlencoded({extended:false}))
 app.get("/users",(req,res)=>{
 const html = `
 <ul>
@@ -18,5 +22,28 @@ res.json(users)
 app.get("/api/users/:id",(req,res)=>{
 const id = Number(req.params.id)
 const user = users.find(user => user.id === id)
-return gres.send(user)
+return res.send(user)
+})
+app.post("/api/users",(req,res)=>{
+const body = req.body
+users.push({id:users.length+1,...body})
+fs.writeFile("MOCK_Data.json",JSON.stringify(users),(err,data)=>(
+res.json({status:"success",msg:"data created successfully",id:users.length})
+))
+})
+app.patch("/api/users/:id",(req,res)=>{
+    const userId = Number(req.params.id)
+    const userIndex = users.findIndex((user)=>user.id === userId )
+    const body = req.body
+    users[userIndex]= {userId,...body}
+    fs.writeFile("MOCK_Data.json",JSON.stringify(users),(err,data)=>(
+res.json({status:"success",msg:"data updated successfully"})
+))   
+})
+app.delete("/api/users/:id",(req,res)=>{
+    const userId = Number(req.params.id)
+    users = users.filter((user)=>user.id!==userId)
+      fs.writeFile("MOCK_Data.json",JSON.stringify(users),(err,data)=>(
+res.json({status:"success",msg:"data deleted successfully"})
+)) 
 })
