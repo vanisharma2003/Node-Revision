@@ -7,6 +7,7 @@ req.name="Meenu"
 next()
 })
 app.get("/", (req, res) => {
+    res.setHeader("X-name","Vani")
   return res.json(sampleData);
 });
 app.get("/custom", (req, res) => {
