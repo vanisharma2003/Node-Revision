@@ -8022,5 +8022,13 @@
     "email": "karanvani@gmail.com",
     "gender": "female",
     "job_title": "senior software engineer"
+  },
+  {
+    "id": 1004,
+    "first_name": "Aditya",
+    "last_name": "raj karan",
+    "email": "adi@gmail.com",
+    "gender": "male",
+    "job_title": "data analyst"
   }
 ]
