@@ -44,7 +44,7 @@ app.post("/api/users", async (req, res) => {
   console.log(result)
   return res.json({msg:"data created successfully"})
 });
-//get users
+//get all users on screen
 app.get("/users",async (req,res)=>{
     const allUsers = await User.find({})
      const html = `
@@ -54,7 +54,25 @@ app.get("/users",async (req,res)=>{
   `;
     return res.send(html)
 })
+//get all users on api
 app.get("/api/users",async (req,res)=>{
     const allDbUsers = await User.find({})
     return res.json({allDbUsers})
+})
+//render a specific information using id 
+app.get("/api/users/:id", async (req,res)=>{
+  const id = req.params.id
+  const user = await User.findById(id)
+  return res.json(user)
+})
+//update an information
+app.patch("/api/users/:id",async (req,res)=>{
+  //as of now we are sending data manually but this should comes from frontend 
+await User.findByIdAndUpdate(req.params.id,{firstName:"Sample"})
+return res.json({success:true})
+})
+//delete an information
+app.delete("/api/users/:id",async (req,res)=>{
+  await User.findByIdAndDelete(req.params.id)
+  return res.json({msg:"item deleted successfully"})``
 })
