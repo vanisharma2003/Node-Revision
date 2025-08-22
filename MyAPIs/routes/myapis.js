@@ -1,6 +1,10 @@
 const express = require("express")
-const { handleAddEntry } = require("../controllers/myapis")
-const myRouter = express.Router()
+const { handleAddEntry,showAllEntries,deleteEntry,updateEntry, showAnEntry } = require("../controllers/myapis")
+const router = express.Router()
 
-myRouter.post("/",handleAddEntry)
-module.exports={myRouter}
+router.post("/",handleAddEntry)
+router.get("/",showAllEntries)
+router.delete("/:id",deleteEntry)
+router.patch("/:id",updateEntry)
+router.get("/:id",showAnEntry)
+module.exports={router}
